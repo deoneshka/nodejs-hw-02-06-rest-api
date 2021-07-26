@@ -1,5 +1,12 @@
 const express = require('express');
 const router = express.Router();
+
+const {
+  contactsAddValidate,
+  contactsUpdateValidate,
+  contactsUpdateStatusValidate,
+} = require('../../middleware/validation/contacts');
+
 const {
   getAll,
   getById,
@@ -13,12 +20,17 @@ router.get('/', getAll);
 
 router.get('/:contactId', getById);
 
-router.post('/', express.json(), add);
+router.post('/', express.json(), contactsAddValidate, add);
 
 router.delete('/:contactId', del);
 
-router.put('/:contactId', express.json(), update);
+router.put('/:contactId', express.json(), contactsUpdateValidate, update);
 
-router.patch('/:contactId', express.json(), updateStatus);
+router.patch(
+  '/:contactId',
+  express.json(),
+  contactsUpdateStatusValidate,
+  updateStatus,
+);
 
 module.exports = router;

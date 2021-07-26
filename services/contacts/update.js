@@ -1,25 +1,19 @@
 const contact = require('../../model/shemas/contactShema');
-const Joi = require('joi');
 
-const contactSchema = Joi.object({
-  name: Joi.string().min(2),
-  email: Joi.string().email({
-    minDomainSegments: 2,
-    tlds: { allow: ['com', 'net'] },
-  }),
-  phone: Joi.number().min(6),
-});
+const update = async (contactId, body) => {
+  try {
+    const result = await contact.findByIdAndUpdate(contactId, body, {
+      new: true,
+    });
 
-const update = (contactId, body) => {
-  const { error } = contactSchema.validate(body);
+    return result;
+  } catch (error) {
+    if (error.message.includes('Cast to ObjectId failed')) {
+      return null;
+    }
 
-  if (error) {
-    return null;
+    throw error;
   }
-
-  return contact.findByIdAndUpdate(contactId, body, {
-    new: true,
-  });
 };
 
 module.exports = update;
