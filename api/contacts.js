@@ -5,7 +5,7 @@ const {
   contactsAddValidate,
   contactsUpdateValidate,
   contactsUpdateStatusValidate,
-} = require('../../middleware/validation/contacts');
+} = require('../middlewares/validation/contacts');
 
 const {
   getAll,
@@ -14,7 +14,7 @@ const {
   del,
   update,
   updateStatus,
-} = require('../../controllers/contacts');
+} = require('../controllers/contacts');
 
 router.get('/', getAll);
 
