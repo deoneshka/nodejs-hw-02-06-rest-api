@@ -7,9 +7,14 @@ const {
   logout,
   current,
   updateAvatar,
+  verify,
+  resending,
 } = require('../controllers/users');
 
-const usersValidate = require('../middlewares/validation/users');
+const {
+  usersValidate,
+  usersEmailValidate,
+} = require('../middlewares/validation/users');
 
 const authenticate = require('../middlewares/userAuth');
 
@@ -22,6 +27,10 @@ router.post('/login', express.json(), usersValidate, login);
 router.get('/logout', authenticate, logout);
 
 router.get('/current', authenticate, current);
+
+router.get('/verify/:verifyToken', verify);
+
+router.post('/verify', usersEmailValidate, resending);
 
 router.patch('/avatars', authenticate, upload.single('avatar'), updateAvatar);
 

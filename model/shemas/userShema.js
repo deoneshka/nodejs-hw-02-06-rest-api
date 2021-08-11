@@ -27,6 +27,14 @@ const userSchema = Schema({
     type: SchemaTypes.ObjectId,
     ref: 'user',
   },
+  verify: {
+    type: Boolean,
+    default: false,
+  },
+  verifyToken: {
+    type: String,
+    required: [true, 'Verify token is required'],
+  },
 });
 
 userSchema.methods.setPassword = function (password) {

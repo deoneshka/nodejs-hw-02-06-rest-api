@@ -1,19 +1,28 @@
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
-const { getByEmail, updateById } = require('../../services/users');
+const { getOne, updateById } = require('../../services/users');
 
 const login = async (req, res, next) => {
   const { email, password } = req.query;
 
   try {
-    const user = await getByEmail({ email });
+    const user = await getOne({ email });
 
     if (!user || !user.comparePassword(password)) {
       res.status(401).json({
         status: 'Unauthorized',
         code: 401,
         message: 'Email or password is wrong',
+      });
+      return;
+    }
+
+    if (!user.verify) {
+      res.status(404).json({
+        status: 'Email not verified.',
+        code: 404,
+        message: 'An email has been sent to your email. Complete registration.',
       });
       return;
     }

@@ -1,3 +1,4 @@
 const usersValidate = require('./usersValidate');
+const usersEmailValidate = require('./usersEmailValidate');
 
-module.exports = usersValidate;
+module.exports = { usersValidate, usersEmailValidate };
