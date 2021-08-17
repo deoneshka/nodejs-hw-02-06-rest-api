@@ -5,6 +5,7 @@ const {
   contactsAddValidate,
   contactsUpdateValidate,
   contactsUpdateStatusValidate,
+  contactsPaginationValidate,
 } = require('../middlewares/validation/contacts');
 
 const {
@@ -16,7 +17,7 @@ const {
   updateStatus,
 } = require('../controllers/contacts');
 
-router.get('/', getAll);
+router.get('/', contactsPaginationValidate, getAll);
 
 router.get('/:contactId', getById);
 
