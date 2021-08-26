@@ -9,11 +9,13 @@ const {
   updateAvatar,
   verify,
   resending,
+  updateSubscription,
 } = require('../controllers/users');
 
 const {
   usersValidate,
   usersEmailValidate,
+  usersSubscriptionValidate,
 } = require('../middlewares/validation/users');
 
 const authenticate = require('../middlewares/userAuth');
@@ -33,5 +35,7 @@ router.get('/verify/:verifyToken', verify);
 router.post('/verify', usersEmailValidate, resending);
 
 router.patch('/avatars', authenticate, upload.single('avatar'), updateAvatar);
+
+router.patch('/', authenticate, usersSubscriptionValidate, updateSubscription);
 
 module.exports = router;

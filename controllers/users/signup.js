@@ -20,11 +20,6 @@ const signup = async (req, res, next) => {
     const verifyToken = uuidv4();
     await add({ email, password, verifyToken });
 
-    // const mail = {
-    //   to: email,
-    //   subject: 'Confirm your email',
-    //   text: `<a href=http://localhost:3000/api/users/verify/${verifyToken}>Click to confirm your email</a>`,
-    // };
     const mail = await verifyMail(email, verifyToken);
     await sendMail(mail);
 
